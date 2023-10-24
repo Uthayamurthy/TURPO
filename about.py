@@ -33,6 +33,8 @@ class About(ttk.Frame):
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
         self.rowconfigure(1, weight=10)
+
+        self.path = PATH
         
         # Header
         hdr_frame = ttk.Frame(self, padding=10)
@@ -64,7 +66,7 @@ class About(ttk.Frame):
         license_window.geometry('500x700')
         license_window.title('T.U.R.P.O License')
 
-        with open('LICENSE.txt', 'r') as l:
+        with open(self.path / 'LICENSE.txt', 'r') as l:
             license_txt = l.read()
 
         license_txt_area = ScrolledText(license_window, padding=5, height=10, autohide=True)
