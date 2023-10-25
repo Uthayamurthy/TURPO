@@ -5,9 +5,19 @@
 > Currently in Beta Phase, some of the features might be missing or unstable, use it for testing and fun only !
 
 ### Installation and Usage Instructions
-Currently using T.U.R.P.O directly from the source is the only option. Binaries will be updated within this week.
 
-#### 1. Use From source (For Advanced Users only ! Windows and Linux Users.)
+#### 1. Install from binaries (Windows and Linux) ####
+
+1. Go to Releases Page - https://github.com/Uthayamurthy/TURPO/releases
+2. From the Assets, download the suitable binary zip. Extract the zip file.
+3. Linux Users - Make the installation script executable and then run it.
+```
+chmod +x install.sh
+./install.sh
+```
+   Windows Users - Just double click the installer and follow along, you will install it.
+
+#### 2. Use From source (For Advanced Users only ! Works on Windows and Linux) ####
 
 It is assumed that you already have python 3.7+ and git installed.
 
@@ -27,7 +37,7 @@ python main.py
 ```
 
 ### Current Roadmap
-- [ ] Build and Release V1.0-beta1 Binaries (Ongoing)
+- [x] Build and Release V1.0-beta1 Binaries (Done! - 23/10/2023)
 - [ ] Code Cleanup and Refractoring
 - [ ] Complete Settings page
 - [ ] Build and Release V1.0-beta2 Binaries
