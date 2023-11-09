@@ -4,9 +4,30 @@
 
 > Currently in Beta Phase, some of the features might be missing or unstable, use it for testing and fun only !
 
-### Installation and Usage Instructions
+### Features :-
 
-#### 1. Install from binaries (Windows and Linux) ####
+- **AES256 bit Encryption** on plane text file - secure and future proof (no proprietary/strange custom file type)
+- **Completely Private and Offline** - Doesn't need Internet to work. No data is collected. Your credentials belong to you and you only !
+- **Simple** to use UI
+- For now, supports **3 types of Credentials - Email, Social Media, Phone Pin**
+- Has a **Powerful Password Generator** tool with support to 3 different types of  passwords (Random Character, Random Word and Random Number).
+- Has both **Encrypted and Unencrypted Backup** option
+
+### Installation and Usage Instructions
+> For now, automatic updates are available only for the snap version.
+#### 1. Install the snap package (Linux Users only !! Recommended ) ####
+
+T.U.R.P.O is now available as a snap package !!
+
+[![Get Turpo from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/turpo-app)
+
+To install just run :
+
+```
+sudo snap install turpo-app --beta
+```
+
+#### 2. Install from binaries (Windows and Linux) ####
 
 1. Go to Releases Page - https://github.com/Uthayamurthy/TURPO/releases
 2. From the Assets, download the suitable binary zip. Extract the zip file.
@@ -37,10 +58,12 @@ python main.py
 ```
 
 ### Current Roadmap
-- [x] Build and Release V1.0-beta1 Binaries (Done! - 23/10/2023)
+- [x] ~~Build and Release V1.0-beta1 Binaries~~ (Done ! Binary release - 23/10/2023, snap release - 09/11/2023)
 - [ ] Code Cleanup and Refractoring
 - [ ] Complete Settings page
 - [ ] Build and Release V1.0-beta2 Binaries
+
+Want to track the latest progress ? Check the development branch ...
 
 #### Always Under Progress
 - Bug Fixes
@@ -49,3 +72,27 @@ python main.py
 
 ### Releases Plan
 Currently lots of features are planned and pending. They will be added and tested in subsequent beta releases. Expect a bunch of beta versions over next several weeks before the first major release.
+
+### Screenshots
+#### 1. Password Management
+![Main Screen](/Images/main-screen.png)
+Overview
+![View Screen](/Images/credential-view.png)
+Credential View 
+![Create Screen](/Images/new-credential.png)
+New Credential
+
+#### 2. Password Generation Tools
+![Password Generation 1](/Images/pass-generator1.png)
+Random Character Passwords
+![Password Generation 2](/Images/pass-generator2.png)
+Random Word Passwords
+![Password Generation 3](/Images/pass-generator3.png)
+Random Numeric Pin
+
+#### 4. Backup Tool
+![Backup Screen](/Images/backup-tool.png)
+Encrypted and Unencrypted Backup tool 
+
+#### 5. Settings Page
+![Settings Screen](/Images/settings.png)
