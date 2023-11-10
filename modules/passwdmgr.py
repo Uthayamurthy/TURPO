@@ -247,22 +247,3 @@ class PasswdMgr:
         if section not in self.sections: self.sections.append(section)
         if section not in self.pw.keys(): self.pw[section] = {}
         self.pw[section][entry_key] = entry_val
-
-
-if __name__ == '__main__':
-    from pathlib import Path
-    PATH = Path(__file__).parent / '..' / 'data'
-    pm = PasswdMgr(PATH, 'pwfile')
-    pm.read()
-    # pm.init_cipher('Bowl-soap')
-    # pm.set_section('Yahoo')
-    # pm.set_secret('Gmail', 'username', 'randomdude')
-    # pm.set_secret('Gmail', 'email', 'randomdude@gmail.com')
-    # pm.set_entry('Yahoo', 'date', '4-5-2023')
-    # pm.set_secret('Yahoo', 'username', 'somedude')
-    # pm.set_secret('Yahoo', 'email', 'somedude@yahoo.com')
-    # pm.set_secret('Yahoo', 'password', 'my-another-secret-password')
-
-    stat = pm.unencrypted_write(filepath=PATH, filename = 'backup_test')
-    print(stat)
-    print('Done !')
