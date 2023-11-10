@@ -23,7 +23,6 @@ import ttkbootstrap as ttk
 from ttkbootstrap import dialogs
 from ttkbootstrap.constants import *
 from PIL import Image, ImageTk
-# from passwd_input import Password_Request_Window
 from modules.widgets import CopyEntry
 
 class Passwd_View(ttk.Toplevel):

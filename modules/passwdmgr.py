@@ -25,7 +25,6 @@ Contact Author : uthayamurthy2006@gmail.com
 
 import re
 import os
-# import bcrypt
 
 try:
     from modules.AES import AESCipher
@@ -94,16 +93,6 @@ class PasswdMgr:
             self.new_file = False
         else:
             print('Skipping Initialisation as the file is not empty.')
-    
-    # Depreceated  !!!!    
-    # def gen_hash(self, passwd):
-    #     bytes = passwd.encode('utf-8')
-    #     salt = bcrypt.gensalt()
-    #     hash = bcrypt.hashpw(bytes, salt)
-    #     return hash.decode('UTF-8')
-
-    # def check_hash(self, passwd):
-    #     return bcrypt.checkpw(passwd.encode('utf-8'), self.pw['main']['hash'].encode('utf-8'))
 
     def create_data_file(self):
         if not os.path.exists(self.filepath):

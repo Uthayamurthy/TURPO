@@ -57,10 +57,3 @@ class AESCipher(object):
     def __unpad(text):
         last_character = text[len(text) - 1:]
         return text[:-ord(last_character)]
-
-# myciper = AESCipher('123awesome#@')
-
-# et = myciper.encrypt('Some Secret Password')
-# print(et)
-# print()
-# print(myciper.decrypt(et))
