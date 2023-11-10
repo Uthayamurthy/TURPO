@@ -59,8 +59,9 @@ python main.py
 
 ### Current Roadmap
 - [x] ~~Build and Release V1.0-beta1 Binaries~~ (Done ! Binary release - 23/10/2023, snap release - 09/11/2023)
-- [ ] Code Cleanup and Refractoring
-- [ ] Complete Settings page
+- [x] ~~Code Cleanup and Refractoring~~ (Done ! - 10/11/2023)
+- [ ] Complete Settings page (Under progress)
+- [ ] Add docs about build process
 - [ ] Build and Release V1.0-beta2 Binaries
 
 Want to track the latest progress ? Check the development branch ...
