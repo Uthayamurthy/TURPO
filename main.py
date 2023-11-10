@@ -24,8 +24,28 @@ from PIL import Image, ImageTk
 from pathlib import Path
 from turpo import TURPO
 from _version import __version__
+import os
+import shutil
 
-PATH = Path(__file__).parent
+SNAP_BUILD = False # Set True for Snap build
+
+if SNAP_BUILD:
+    print('Snap Build !')
+    data_var = os.environ['SNAP_USER_DATA']
+    PATH = Path(f'{data_var}/')
+    print('PATH :', PATH)
+    snap_path = Path(os.environ['SNAP'])
+    if not os.path.exists(PATH / 'assets'):
+        print('Assets does not exist ! So copying it to user data directory ...')
+        shutil.copytree(snap_path / '_internal' / 'assets', PATH / 'assets')
+        print('Done copying !')
+    if not os.path.exists(PATH / 'LICENSE.txt'):
+        print('LICENSE.txt does not exist ! So copying it to user data directory ...')
+        shutil.copy(snap_path / '_internal' / 'LICENSE.txt', PATH)
+        print('Done copying !')
+    
+else:
+    PATH = Path(__file__).parent
 
 if __name__ == '__main__':
 
