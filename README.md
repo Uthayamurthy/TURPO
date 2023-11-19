@@ -61,10 +61,20 @@ python main.py
 - [x] ~~Build and Release V1.0-beta1 Binaries~~ (Done ! Binary release - 23/10/2023, snap release - 09/11/2023)
 - [x] ~~Code Cleanup and Refractoring~~ (Done ! - 10/11/2023)
 - [ ] Complete Settings page (Under progress)
+- [ ] Create Password Restore Tool
+- [ ] Add User Feedback Page
 - [ ] Add docs about build process
 - [ ] Build and Release V1.0-beta2 Binaries
+- [ ] Improve Password Management
+  - [ ] Add Show/Hide for password view and create password windows for passwords.
+  - [ ] Add url option for necessary credentials
+  - [ ] Add new types of credential support and review logos
+  - [ ] Add Sub-Category within each credential (Eg :- Gmail, yahoo, etc within Email)
+  - [ ] Add notes option
+- [ ] Improve New User Experience
+- [ ] Build and Release V1.0-beta3 Binaries
 
-Want to track the latest progress ? Check the development branch ...
+Want to track the latest progress ? Check the development branch (https://github.com/Uthayamurthy/TURPO/tree/development) ...
 
 #### Always Under Progress
 - Bug Fixes
