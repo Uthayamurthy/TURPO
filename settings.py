@@ -35,6 +35,8 @@ class Gen_Settings(ttk.Frame): # Generalised settings class
         self.SM = sm
         self.cat = None # Assign for individual classes ! Eg :- 'PM'
 
+        self.changed = False
+
         self.body = ttk.Frame(self)
         self.body.grid(row=0, column=0)
 
@@ -43,18 +45,33 @@ class Gen_Settings(ttk.Frame): # Generalised settings class
 
         self.discard_btn = ttk.Button(self.footer, text='Discard', bootstyle='danger-outline', command=self.discard_setting)
         self.discard_btn.grid(row=0, column=0, padx=5, pady=50, sticky=W)
+        self.discard_btn.config(state='disabled')
 
         self.save_btn = ttk.Button(self.footer, text='Save', bootstyle='success-outline', command=self.update_setting)
         self.save_btn.grid(row=0, column=1, padx=40, pady=50, sticky=N)
-
+        self.save_btn.config(state='disabled')
 
         self.settings_index = {} # key:value :: 'setting_name': (setting_var, display_type)
 
+    def set_change(self, var, index, mode):
+        print("Traced variable {}".format(var))
+        
+        if not self.changed:
+            self.changed = True
+            self.save_btn.config(state='enabled')
+            self.discard_btn.config(state='enabled')
+        
     def update_setting(self):
-            for setting_name, settings in self.settings_index.items():
-                self.SM.set(self.cat, setting_name, str(settings[0].get()))
+        for setting_name, settings in self.settings_index.items():
+            self.SM.set(self.cat, setting_name, str(settings[0].get()))
+        self.changed = False
+        try:
+            self.discard_btn.config(state='disabled')
+            self.save_btn.config(state='disabled')
             dialogs.Messagebox.show_info(message='Settings saved successfully !', title='Saved Settings')
-    
+        except:
+            print("Avoiding disabling buttons because they don't exist !")
+
     def init_setting(self, setting, default, display_type): # Create a setting variable, check for value in db, if it doesn't exist create one ! Else return the existing one.
         if display_type == 'int':
             var = ttk.IntVar()
@@ -64,7 +81,7 @@ class Gen_Settings(ttk.Frame): # Generalised settings class
             var = ttk.BooleanVar()
 
         self.settings_index[setting] = (var, display_type)
-        
+
         val = self.SM.retrieve(self.cat, setting)
         
         if val != None:
@@ -72,6 +89,9 @@ class Gen_Settings(ttk.Frame): # Generalised settings class
         else:
             self.SM.set(self.cat, setting, default)
             var.set(self.conv_type(default, display_type))
+        
+        var.trace_add('write', self.set_change)
+
 
     def conv_type(self, val, typ):
         if typ == 'int':
@@ -80,11 +100,27 @@ class Gen_Settings(ttk.Frame): # Generalised settings class
             return str(val)
         elif typ == 'bool':
             return bool(val)
-        
+    
+    def restore_values(self): 
+        for setting_name, settings in self.settings_index.items():
+            prev_setting = self.SM.retrieve(self.cat, setting_name)
+            settings[0].set(prev_setting)     
+
     def discard_setting(self):
-        dialogs.Messagebox.show_warning(message='Are you sure you want to discard the changes ?', title='Discard Settings ?')
+        response = dialogs.Messagebox.show_question(message='Are you sure you want to discard the changes ?', title='Discard Settings ?', buttons=['No:secondary', 'Yes:primary'])
+        if response == 'Yes':
+            self.restore_values()
+            self.changed = False
+            self.save_btn.config(state='disabled')
+            self.discard_btn.config(state='disabled')
 
-
+    def destroy(self):
+        if self.changed:
+            response = dialogs.Messagebox.show_question(message='Are you sure you want to discard the changes ?', title='Discard Settings ?', buttons=['No, Save:success', 'Discard:danger'])
+            if response != 'Discard':
+                self.update_setting()
+        super().destroy()
+        
 class PM_Settings(Gen_Settings): # Password Management Settings
     def __init__(self, main, app, PATH, pm, sm):
         super().__init__(main, app, PATH, pm, sm)
@@ -231,6 +267,8 @@ class Settings(ttk.Frame):
         if self.sub_frame != None:
             for widget in self.sub_frame.winfo_children():
                 widget.destroy()
+            self.sub_frame.destroy()
+            self.sub_frame = None
 
     def handle_category_choice(self):
 
@@ -242,5 +280,8 @@ class Settings(ttk.Frame):
             self.sub_frame = PM_Settings(self.body_frame, self.app, self.PATH, self.PM, self.SM)
         elif choice == 1:
             self.sub_frame = PG_Settings(self.body_frame, self.app, self.PATH, self.PM, self.SM)
-
-        self.sub_frame.grid(row=3, column=0, pady=20, sticky=NSEW)
+        
+        try:
+            self.sub_frame.grid(row=3, column=0, pady=20, sticky=NSEW)
+        except:
+            pass
