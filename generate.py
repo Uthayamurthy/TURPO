@@ -21,7 +21,6 @@ Contact Author : uthayamurthy2006@gmail.com
 
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
-from ttkbootstrap.scrolled import ScrolledFrame
 from modules.passwdgen import *
 from modules.widgets import CopyField
 
