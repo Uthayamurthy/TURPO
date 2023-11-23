@@ -261,6 +261,28 @@ class PB_Settings(Gen_Settings): # Password Backup Settings
         if str(f_path) != '.':
             self.settings_index['defaultBackupLocation'][0].set(str(f_path))
 
+class Passwd_Tools(ttk.Frame): # Password Tools class
+    
+    def __init__(self, main, app, PATH, pm, sm):
+        super().__init__(main)
+
+        self.app = app
+        self.PATH = PATH
+        self.PM = pm
+        self.SM = sm
+
+        self.tool1_lbl = ttk.Label(self, text='Restore Your Password Backup', font=('Helventica', 13, 'bold'))
+        self.tool1_lbl.grid(row=0, column=0, padx=5, pady=5, sticky=NSEW)
+        self.tool1_btn = ttk.Button(self, text='Restore Tool', bootstyle='primary-outline')
+        self.tool1_btn.grid(row=0, column=1, padx=80, pady=5, sticky=NSEW)
+
+        self.tool2_lbl = ttk.Label(self, text='Change Your Password', font=('Helventica', 13, 'bold'))
+        self.tool2_lbl.grid(row=1, column=0, padx=5, pady=5, sticky=NSEW)
+        self.tool2_btn = ttk.Button(self, text='Change Password Tool', bootstyle='primary-outline')
+        self.tool2_btn.grid(row=1, column=1, padx=80, pady=5, sticky=NSEW)
+
+
+
 
 class Settings(ttk.Frame):
     
@@ -335,6 +357,8 @@ class Settings(ttk.Frame):
             self.sub_frame = PG_Settings(self.body_frame, self.app, self.PATH, self.PM, self.SM)
         elif choice == 2:
             self.sub_frame = PB_Settings(self.body_frame, self.app, self.PATH, self.PM, self.SM)
+        elif choice == 3:
+            self.sub_frame = Passwd_Tools(self.body_frame, self.app, self.PATH, self.PM, self.SM)
         
         try:
             self.sub_frame.grid(row=3, column=0, pady=20, sticky=NSEW)
