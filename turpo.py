@@ -203,7 +203,7 @@ class TURPO(ttk.Frame):
     def on_backup(self):
         if self.current_window != 'backup':
             self.clear_main_frame()
-            self.main_frame = Backup(self, self.PM)
+            self.main_frame = Backup(self, self.PM, self.SM)
             self.main_frame.grid(row=1, column=1, sticky=NSEW)
             self.current_window = 'backup'
 

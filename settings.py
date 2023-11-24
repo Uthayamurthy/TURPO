@@ -216,47 +216,53 @@ class PB_Settings(Gen_Settings): # Password Backup Settings
 
         self.cat = 'PB'
 
-        self.init_setting('lastBackupDate', 'No Backups Yet', 'str')
-        self.set1_lbl = ttk.Label(self.body, text='Last Backup Date ', font=('Helventica', 13, 'bold'))
+        self.init_setting('lastEncyptedBackup', 'No Backup Yet', 'str')
+        self.set1_lbl = ttk.Label(self.body, text='Last Encrypted Backup', font=('Helventica', 13, 'bold'))
         self.set1_lbl.grid(row=0, column=0, padx=5, pady=8, sticky=NSEW)
-        self.set1_lbl2 = ttk.Label(self.body, textvariable=self.settings_index['lastBackupDate'][0], font=('Helventica', 12, 'bold'))
+        self.set1_lbl2 = ttk.Label(self.body, textvariable=self.settings_index['lastEncyptedBackup'][0], font=('Helventica', 12, 'bold'))
         self.set1_lbl2.grid(row=0, column=1, padx=70, pady=8, sticky=N)
+
+        self.init_setting('lastUnencyptedBackup', 'No Backup Yet', 'str')
+        self.set1_lbl = ttk.Label(self.body, text='Last Unencrypted Backup', font=('Helventica', 13, 'bold'))
+        self.set1_lbl.grid(row=1, column=0, padx=5, pady=8, sticky=NSEW)
+        self.set1_lbl2 = ttk.Label(self.body, textvariable=self.settings_index['lastUnencyptedBackup'][0], font=('Helventica', 12, 'bold'))
+        self.set1_lbl2.grid(row=1, column=1, padx=70, pady=8, sticky=N)
 
         self.init_setting('defaultBackupType', 'Encrypted Backup', 'str')
         self.set2_lbl = ttk.Label(self.body, text='Default Password Backup Type', font=('Helventica', 13, 'bold'))
-        self.set2_lbl.grid(row=1, column=0, padx=5, pady=8, sticky=NSEW)
+        self.set2_lbl.grid(row=2, column=0, padx=5, pady=8, sticky=NSEW)
         passwd_type_options = ['','Encrypted Backup', 'Unencrypted Backup']
         self.set2_btn = ttk.OptionMenu(self.body, self.settings_index['defaultBackupType'][0], *passwd_type_options, bootstyle='outline')
-        self.set2_btn.grid(row=1, column=1, padx=70, pady=8, sticky=N)
+        self.set2_btn.grid(row=2, column=1, padx=70, pady=8, sticky=N)
 
         sep1 = ttk.Separator(self.body)
-        sep1.grid(row=2, column=0, columnspan=2, pady=20,sticky=NSEW)
+        sep1.grid(row=3, column=0, columnspan=2, pady=20,sticky=NSEW)
 
         self.init_setting('defaultBackupFilename', 'TURPO_Credentials_Backup', 'str')
         self.set3_lbl = ttk.Label(self.body, text='Default Backup File Name', font=('Helventica', 13, 'bold'))
-        self.set3_lbl.grid(row=3, column=0, padx=5, pady=8, sticky=NSEW)
+        self.set3_lbl.grid(row=4, column=0, padx=5, pady=8, sticky=NSEW)
         self.set3_lbl2 = ttk.Entry(self.body, textvariable=self.settings_index['defaultBackupFilename'][0], width=50, justify=CENTER)
-        self.set3_lbl2.grid(row=3, column=1, padx=70, pady=8, sticky=N)
+        self.set3_lbl2.grid(row=4, column=1, padx=70, pady=8, sticky=N)
         
         self.init_setting('defaultBackupLocation', str(PATH / 'backups'), 'str')
         self.set4_lbl = ttk.Label(self.body, text='Default Password Backup Location', font=('Helventica', 13, 'bold'))
-        self.set4_lbl.grid(row=4, column=0, padx=5, pady=8, sticky=NSEW)
+        self.set4_lbl.grid(row=5, column=0, padx=5, pady=8, sticky=NSEW)
         self.set4_lbl2 = ttk.Label(self.body, textvariable=self.settings_index['defaultBackupLocation'][0], font=('Helventica', 12, 'bold'))   
-        self.set4_lbl2.grid(row=4, column=1, padx=70, pady=8, sticky=N)
+        self.set4_lbl2.grid(row=5, column=1, padx=70, pady=8, sticky=N)
         self.set4_btn = ttk.Button(self.body, text='Browse', bootstyle='secondary', command=self.browse)
-        self.set4_btn.grid(row=4, column=3, padx=10, pady=8, sticky=NSEW)
+        self.set4_btn.grid(row=5, column=3, padx=10, pady=8, sticky=NSEW)
 
         self.init_setting('includeDate', '1', 'int')
         self.set5_lbl = ttk.Label(self.body, text='Include the Date with Filename by Default ?', font=('Helventica', 13, 'bold'))
-        self.set5_lbl.grid(row=5, column=0, padx=5, pady=8, sticky=NSEW)
+        self.set5_lbl.grid(row=6, column=0, padx=5, pady=8, sticky=NSEW)
         self.set5_btn = ttk.Checkbutton(self.body, bootstyle='info-round-toggle', variable=self.settings_index['includeDate'][0])
-        self.set5_btn.grid(row=5, column=1, padx=70, pady=8, sticky=N)
+        self.set5_btn.grid(row=6, column=1, padx=70, pady=8, sticky=N)
 
         self.init_setting('includeTime', '1', 'int')
         self.set6_lbl = ttk.Label(self.body, text='Include the Time with Filename by Default ?', font=('Helventica', 13, 'bold'))
-        self.set6_lbl.grid(row=6, column=0, padx=5, pady=8, sticky=NSEW)
+        self.set6_lbl.grid(row=7, column=0, padx=5, pady=8, sticky=NSEW)
         self.set6_btn = ttk.Checkbutton(self.body, bootstyle='info-round-toggle', variable=self.settings_index['includeTime'][0])
-        self.set6_btn.grid(row=6, column=1, padx=70, pady=8, sticky=N)
+        self.set6_btn.grid(row=7, column=1, padx=70, pady=8, sticky=N)
     
     def browse(self):
         self.fd = askdirectory(initialdir = self.settings_index['defaultBackupLocation'][0].get(), title='Select Default Backup Location')
