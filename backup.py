@@ -23,11 +23,9 @@ import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 from tkinter.filedialog import asksaveasfilename
 from pathlib import Path
-from ttkbootstrap.dialogs import dialogs
 import datetime
 
 class Backup_Frame(ttk.Frame):
-    # lastBackupDate
     def __init__(self, main, pm, sm, mode):
         
         super().__init__(main)
