@@ -196,7 +196,7 @@ class TURPO(ttk.Frame):
     def on_generate(self):
         if self.current_window != 'generate':
             self.clear_main_frame()
-            self.main_frame = Generate(self, self.PATH)
+            self.main_frame = Generate(self, self.PATH, self.SM)
             self.main_frame.grid(row=1, column=1, columnspan=3, sticky=NSEW)
             self.current_window = 'generate'
 
