@@ -25,6 +25,7 @@ Contact Author : uthayamurthy2006@gmail.com
 
 import re
 import os
+import shutil
 
 try:
     from modules.AES import AESCipher
@@ -111,14 +112,19 @@ class PasswdMgr:
             print('File already exits, so skipping ...')
 
 
-    def read(self):
+    def read(self, filepath=None, filename=None):
         sectionre = re.compile('\[(.*)\]')
         entryre = re.compile('(.*?)=(.*)')
         stringre = re.compile('"(.*)"')
         intre = re.compile('^[0-9]*$')
         commentre = re.compile('^#.*')
-        
-        with open(self.filepath / self.filename, 'r') as pwfile:  
+
+        if filepath == None: filepath = self.filepath
+        if filename == None: filename = self.filename
+        with open(filepath / filename, 'r') as pwfile:
+            # Reset pw and sections
+            self.pw = {} 
+            self.sections = []  
             for line in pwfile:
                 line = line.strip()
                 if line == '' or line == ' ': continue
@@ -162,7 +168,7 @@ class PasswdMgr:
         except:
             print('No old file found to remove, so moving ahead to rename the file.')
         os.rename(filepath / f'{filename}_new', filepath / filename)
-    
+
     def unencrypted_write(self, filepath, pw=None, filename=None): # For Unencrypted Backups, return -> True if password available and successfully saved else false.
         if pw == None: pw = self.pw
         if filename == None: filename = self.filename
@@ -186,6 +192,71 @@ class PasswdMgr:
             return True
         else:
             return False
+        
+    def check_integrity(self, filepath, filename, encrypted): # Check the integrity of the password file (Before restoring)
+        try:
+            if encrypted: # Check For Encrypted Files
+                self.read(filepath, filename)
+                test_text = self.pw['main']['test_text']
+                if test_text != '' and test_text != ' ' and test_text != None:
+                    return True
+                else:
+                    return False
+            else: # Check for Unencrypted File
+                self.read(filepath, filename)
+                if len(self.sections) != 0:
+                    return True
+                else:
+                    return False
+        except:
+            return False
+        finally: # Cleanup
+            self.read()
+
+    def prepare_restore(self, passwd): # If credentials in pw are unencrypted, this method will encrypt them automatically, Used to encrypt Newly Restored Unencrypted Files. Also, add main test text.
+        
+
+        encrypted_fieldnames = ['password', 'username', 'pin', 'email']
+        temp_cipher = AESCipher(passwd)
+        
+        self.sections.append('main')
+        self.pw['main'] = {}
+
+        test_text = passwdgen.gen_random_password(18)
+        self.pw['main']['test_text'] = temp_cipher.encrypt(test_text)
+        
+        for section, entry in self.pw.items():
+            if section == 'main':
+                continue
+            for key, value in entry.items():
+                if key in encrypted_fieldnames:
+                    self.pw[section][key] = temp_cipher.encrypt(value)
+
+        
+    def restore_backup(self, filepath, filename, encrypted=True, passwd=None):
+        file_integrity = self.check_integrity(filepath, filename, encrypted)
+        if file_integrity == True:
+            try:
+                os.rename(self.filepath / self.filename, self.filepath / f'{self.filename}_old') # For redundancy rename the current file rather than deleting it !
+                if encrypted: # Restoring Encrypted Backup        
+                    shutil.copyfile(filepath / filename, self.filepath / self.filename)
+                    return True
+                else: # Restoring Unencrypted Backup
+                    if passwd == None: return False
+                    self.read(filepath, filename)
+                    self.prepare_restore(passwd)
+                    self.write()
+                    return True
+
+            except:
+                print('Encountered some error while trying to restore the backup.')
+                print('Restoring the current file ...')
+                os.rename(self.filepath / f'{self.filename}_old', self.filepath / self.filename)
+                self.read()
+                return False
+        else:
+            raise Exception('Password File Integrity Test Failed !')
+
 
     def set_section(self, section):
         self.sections.append(section)
