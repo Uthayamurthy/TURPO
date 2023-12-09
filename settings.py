@@ -26,6 +26,9 @@ from tkinter.filedialog import askdirectory
 from pathlib import Path
 from ttkbootstrap.tooltip import ToolTip
 
+# Import Tools 
+from passwd_restore import Passwd_Restore
+
 class Gen_Settings(ttk.Frame): # Generalised settings class
     
     def __init__(self, main, app, PATH, pm, sm):
@@ -280,9 +283,9 @@ class Passwd_Tools(ttk.Frame): # Password Tools class
         self.PM = pm
         self.SM = sm
 
-        self.tool1_lbl = ttk.Label(self, text='Restore Your Password Backup', font=('Helventica', 13, 'bold'))
+        self.tool1_lbl = ttk.Label(self, text='Restore Your Backup', font=('Helventica', 13, 'bold'))
         self.tool1_lbl.grid(row=0, column=0, padx=5, pady=5, sticky=NSEW)
-        self.tool1_btn = ttk.Button(self, text='Restore Tool', bootstyle='primary-outline')
+        self.tool1_btn = ttk.Button(self, text='Restore Tool', bootstyle='primary-outline', command=self.restore_window)
         self.tool1_btn.grid(row=0, column=1, padx=80, pady=5, sticky=NSEW)
 
         self.tool2_lbl = ttk.Label(self, text='Change Your Password', font=('Helventica', 13, 'bold'))
@@ -290,8 +293,8 @@ class Passwd_Tools(ttk.Frame): # Password Tools class
         self.tool2_btn = ttk.Button(self, text='Change Password Tool', bootstyle='primary-outline')
         self.tool2_btn.grid(row=1, column=1, padx=80, pady=5, sticky=NSEW)
 
-
-
+    def restore_window(self):
+        restore = Passwd_Restore(self, self.app, self.PATH, self.PM)
 
 class Settings(ttk.Frame):
     
