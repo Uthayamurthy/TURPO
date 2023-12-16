@@ -86,7 +86,7 @@ class PasswdMgr:
         if self.pw == {}:
             self.sections= ['main']
             # pass_hash = self.gen_hash(passwd)
-            test_text = self.cipher.encrypt(passwdgen.gen_random_password(18)) # Random encrypted text, useful later to check the key ir right or not. 
+            test_text = self.cipher.encrypt(passwdgen.gen_random_password(18)) # Random encrypted text, useful later to check the key is right or not. 
             self.pw = {
                 'main': {'test_text':test_text}
             }
@@ -192,6 +192,41 @@ class PasswdMgr:
             return True
         else:
             return False
+        
+    def change_prime_key(self, old_key, new_key):
+        try:
+            self.read()
+            os.rename(self.filepath / self.filename, self.filepath / f'{self.filename}_old') # Backup
+            old_cipher = AESCipher(old_key)
+            new_cipher = AESCipher(new_key)
+            encrypted_fieldnames = ['password', 'username', 'pin', 'email']
+
+            test_text = new_cipher.encrypt(passwdgen.gen_random_password(18))
+
+            self.pw['main'] = {'test_text':test_text}
+
+            with open(self.filepath / self.filename, 'w') as pwfile:
+                print('Staring the change ...')
+
+                for section, entry in self.pw.items():
+                    print(f'Writing Section - {section}')
+                    pwfile.write(f'[{section}]')
+
+                    for key, value in entry.items():
+                        print(key)
+                        if key in encrypted_fieldnames:
+                            print(f'Value before changing - {value}')
+                            value = new_cipher.encrypt(old_cipher.decrypt(value)) # Encrypt with new password !
+                            print(f'Value after changing - {value}')
+                        if isinstance(value, str): value = f'"{value}"'
+                        pwfile.write(f'\n{key}={value}')
+                    pwfile.write('\n\n')
+
+        except:
+            self.cipher_key = None
+            print('Prime Key Change Failed ! Restoring the old file ...')
+            os.rename(self.filepath / f'{self.filename}_old', self.filepath / self.filename)
+            print('Done !')
         
     def check_integrity(self, filepath, filename, encrypted): # Check the integrity of the password file (Before restoring)
         try:
