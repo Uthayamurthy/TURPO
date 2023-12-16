@@ -206,27 +206,23 @@ class PasswdMgr:
             self.pw['main'] = {'test_text':test_text}
 
             with open(self.filepath / self.filename, 'w') as pwfile:
-                print('Staring the change ...')
-
                 for section, entry in self.pw.items():
-                    print(f'Writing Section - {section}')
                     pwfile.write(f'[{section}]')
 
                     for key, value in entry.items():
-                        print(key)
                         if key in encrypted_fieldnames:
-                            print(f'Value before changing - {value}')
                             value = new_cipher.encrypt(old_cipher.decrypt(value)) # Encrypt with new password !
-                            print(f'Value after changing - {value}')
                         if isinstance(value, str): value = f'"{value}"'
                         pwfile.write(f'\n{key}={value}')
                     pwfile.write('\n\n')
+            return True
 
         except:
             self.cipher_key = None
             print('Prime Key Change Failed ! Restoring the old file ...')
             os.rename(self.filepath / f'{self.filename}_old', self.filepath / self.filename)
             print('Done !')
+            return False
         
     def check_integrity(self, filepath, filename, encrypted): # Check the integrity of the password file (Before restoring)
         try:
