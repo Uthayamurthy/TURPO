@@ -31,7 +31,7 @@ class Passwd_Change(ttk.Toplevel):
 
         self.old_key = ttk.StringVar()
 
-        old_entry = ttk.Entry(body_frame, textvariable=self.old_key, show='*', width=40, justify=CENTER)
+        old_entry = ttk.Entry(body_frame, textvariable=self.old_key, show='*', width=30, justify=CENTER)
         old_entry.grid(row=0, column=1, padx=5, pady=5, sticky=NSEW)
 
         lbl2 = ttk.Label(body_frame, text='New Prime Key :', font=('Helvetica', 13, 'bold'))
@@ -39,7 +39,7 @@ class Passwd_Change(ttk.Toplevel):
 
         self.new_key = ttk.StringVar()
 
-        new_entry = ttk.Entry(body_frame, textvariable=self.new_key, width=40, justify=CENTER)
+        new_entry = ttk.Entry(body_frame, textvariable=self.new_key, width=30, justify=CENTER)
         new_entry.grid(row=1, column=1, padx=5, pady=5, sticky=NSEW)
 
         change_btn = ttk.Button(self, text='Change', bootstyle='primary', command=self.change_key)
