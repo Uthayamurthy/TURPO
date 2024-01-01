@@ -28,6 +28,7 @@ from modules.settingsmgr import SettingsMgr
 from manage import Manage
 from generate import Generate
 from backup import Backup
+from feedback import Feedback
 from settings import Settings
 from about import About
 
@@ -52,8 +53,9 @@ class TURPO(ttk.Frame):
         img1 = Image.open(PATH / 'assets' / 'manage.png')
         img2 = Image.open(PATH / 'assets' / 'generate.png')
         img3 = Image.open(PATH / 'assets' / 'backup.png')
-        img4 = Image.open(PATH / 'assets' / 'settings.png')
-        img5 = Image.open(PATH / 'assets' / 'about.png')
+        img4 = Image.open(PATH / 'assets' / 'feedback.png')
+        img5 = Image.open(PATH / 'assets' / 'settings.png')
+        img6 = Image.open(PATH / 'assets' / 'about.png')
 
         self.images = [
             ImageTk.PhotoImage(
@@ -74,10 +76,14 @@ class TURPO(ttk.Frame):
             ),
             ImageTk.PhotoImage(
                img4,
-               name='settings'
+               name='feedback'
             ),
             ImageTk.PhotoImage(
                img5,
+               name='settings'
+            ),
+            ImageTk.PhotoImage(
+               img6,
                name='about'
             ),
         ]
@@ -147,6 +153,16 @@ class TURPO(ttk.Frame):
         )
         backup_btn.pack(side=TOP, fill=BOTH, ipadx=10, ipady=10)
 
+        feedback_btn = ttk.Button(
+            master=action_frame,
+            image='feedback',
+            text='Feedback',
+            compound=TOP,
+            bootstyle=INFO,
+            command=self.on_feedback
+        )
+        feedback_btn.pack(side=TOP, fill=BOTH, ipadx=10, ipady=10)
+
         settings_btn = ttk.Button(
             master=action_frame,
             image='settings',
@@ -213,6 +229,13 @@ class TURPO(ttk.Frame):
             self.main_frame = About(self, self.PATH)
             self.main_frame.grid(row=1, column=1, sticky=NSEW)
             self.current_window = 'about'
+
+    def on_feedback(self):
+        if self.current_window != 'feedback':
+            self.clear_main_frame()
+            self.main_frame = Feedback(self, self.PATH)
+            self.main_frame.grid(row=1, column=1, sticky=NSEW)
+            self.current_window = 'feedback'
 
     def on_settings(self):
         if self.current_window != 'settings':

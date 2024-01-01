@@ -1,9 +1,9 @@
 # Roadmap
 
 ## Upcoming
-- [ ] Add User Feedback Page (Under Progress)
-- [ ] Add docs about build process
-- [ ] Minor Enhancements
+
+- [ ] Add docs about build process (Under Progress)
+- [ ] Minor Enhancements (Under Progress)
 - [ ] Build and Release V1.0-beta2 Binaries
 - [ ] Improve Password Management
   - [ ] Add Show/Hide for password view and create password windows for passwords.
@@ -15,6 +15,7 @@
 - [ ] Build and Release V1.0-beta3 Binaries
 
 ## Completed
+- [X] ~~Add User Feedback Page~~ (Done ! - 1/01/2024)
 - [X] ~~Create Prime Key Change Tool~~ (Done! - 16/12/2023)
 - [X] ~~Create Password Restore Tool~~ (Done! - 9/12/2023)
 - [x] ~~Complete Settings page~~ (Done ! - 24/11/2023)
