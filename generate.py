@@ -39,7 +39,7 @@ class RandWordPassword(ttk.Frame):
         except:
             self.num_words = ttk.IntVar(value=4)
             self.sep = ttk.StringVar(value='-')
-            self.min_len = ttk.StringVar(value=4)
+            self.min_len = ttk.IntVar(value=4)
 
         # Number of Words
         num_words_lbl = ttk.Label(self, text='Number Of Words : ', font=('Helventica', 12, 'bold'))
