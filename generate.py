@@ -32,11 +32,18 @@ class RandWordPassword(ttk.Frame):
 
         self.SM = sm
 
+        try:
+            self.num_words = ttk.IntVar(value=int(self.SM.retrieve('PG', 'wordPasswdNoWord')))
+            self.sep = ttk.StringVar(value=self.SM.retrieve('PG', 'wordPasswdSeperator'))
+            self.min_len = ttk.IntVar(value=int(self.SM.retrieve('PG', 'wordPasswdLength')))
+        except:
+            self.num_words = ttk.IntVar(value=4)
+            self.sep = ttk.StringVar(value='-')
+            self.min_len = ttk.StringVar(value=4)
+
         # Number of Words
         num_words_lbl = ttk.Label(self, text='Number Of Words : ', font=('Helventica', 12, 'bold'))
         num_words_lbl.grid(row=0, column=0, padx=5, pady=5, sticky=NSEW)
-        
-        self.num_words = ttk.IntVar(value=int(self.SM.retrieve('PG', 'wordPasswdNoWord')))
 
         num_words_box = ttk.Spinbox(self, state="readonly", from_= 4, to=10, textvariable=self.num_words,justify=CENTER, width=8)
         num_words_box.grid(row=0, column=1, padx=5, pady=5, sticky=NSEW)
@@ -45,7 +52,6 @@ class RandWordPassword(ttk.Frame):
         sep_lbl = ttk.Label(self, text='Seperator : ', font=('Helventica', 12, 'bold'))
         sep_lbl.grid(row=1, column=0, padx=5, pady=5, sticky=NSEW)
         
-        self.sep = ttk.StringVar(value=self.SM.retrieve('PG', 'wordPasswdSeperator'))
         sep_values = ['None', '-', '.', '_', ':', '!', '$']
         sep_values.reverse()
 
@@ -55,8 +61,6 @@ class RandWordPassword(ttk.Frame):
         # Min Word Length
         min_len_lbl = ttk.Label(self, text='Minimum Word Length : ', font=('Helventica', 12, 'bold'))
         min_len_lbl.grid(row=2, column=0, padx=5, pady=5, sticky=NSEW)
-        
-        self.min_len = ttk.IntVar(value=int(self.SM.retrieve('PG', 'wordPasswdLength')))
 
         min_len_box = ttk.Spinbox(self, state="readonly", from_= 3, to=5, textvariable=self.min_len,justify=CENTER, width=8)
         min_len_box.grid(row=2, column=1, padx=5, pady=5, sticky=NSEW)
@@ -85,12 +89,15 @@ class RandPassword(ttk.Frame):
         super().__init__(main)
 
         self.SM = sm
-
+        
+        try:
+            self.num_chars = ttk.IntVar(value=int(self.SM.retrieve('PG', 'randPassLength')))
+        except:
+            self.num_chars = ttk.IntVar(value=12)
+             
         # Number of Characters
         num_char_lbl = ttk.Label(self, text='Number Of Characters : ', font=('Helventica', 12, 'bold'))
         num_char_lbl.grid(row=0, column=0, padx=5, pady=5)
-        
-        self.num_chars = ttk.IntVar(value=int(self.SM.retrieve('PG', 'randPassLength')))
 
         num_char_box = ttk.Spinbox(self, state="readonly", from_= 10, to=25, textvariable=self.num_chars, justify=CENTER, width=8)
         num_char_box.grid(row=0, column=1, padx=5, pady=5)
@@ -124,11 +131,14 @@ class RandPin(ttk.Frame):
 
         self.SM = sm
 
+        try:
+            self.num_chars = ttk.IntVar(value=int(self.SM.retrieve('PG', 'numPinLength')))
+        except:
+            self.num_chars = ttk.IntVar(value=4)
+
         # Number of Characters
         num_char_lbl = ttk.Label(self, text='Pin Length : ', font=('Helventica', 12, 'bold'))
         num_char_lbl.grid(row=0, column=0, padx=5, pady=5)
-        
-        self.num_chars = ttk.IntVar(value=int(self.SM.retrieve('PG', 'numPinLength')))
 
         num_char_box = ttk.Spinbox(self, state="readonly", from_= 4, to=16, textvariable=self.num_chars, justify=CENTER, width=8)
         num_char_box.grid(row=0, column=1, padx=5, pady=5)

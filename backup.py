@@ -38,15 +38,30 @@ class Backup_Frame(ttk.Frame):
         self.fname_var = ttk.StringVar()
         self.status_var = ttk.StringVar()
         self.last_backup = ttk.StringVar()
+        self.include_date = ttk.IntVar()
+        self.include_time = ttk.IntVar()
+        
+        try:
+            self.fname_var.set(str(self.SM.retrieve('PB', 'defaultBackupFilename')))
+            self.path_var.set(str(self.SM.retrieve('PB', 'defaultBackupLocation')))
+            self.include_date.set(int(self.SM.retrieve('PB', 'includeDate')))
+            self.include_time.set(int(self.SM.retrieve('PB', 'includeTime')))
+        except:
+            self.fname_var.set('Credentials_Backup')
+            self.path_var.set('Path Not Selected !')
+            self.include_date.set(1)
+            self.include_time.set(1)
 
-        if self.mode == 'e':
-            self.last_backup.set(str(self.SM.retrieve('PB', 'lastEncyptedBackup')))
-        if self.mode == 'u':
-            self.last_backup.set(str(self.SM.retrieve('PB', 'lastUnencyptedBackup')))
+        try:
+            if self.mode == 'e':
+                self.last_backup.set(str(self.SM.retrieve('PB', 'lastEncyptedBackup')))
+            if self.mode == 'u':
+                self.last_backup.set(str(self.SM.retrieve('PB', 'lastUnencyptedBackup')))
+        except:
+            self.last_backup.set('-----')
 
         self.status_var.set('Ready to Start')
-        self.fname_var.set(str(self.SM.retrieve('PB', 'defaultBackupFilename')))
-        self.path_var.set(str(self.SM.retrieve('PB', 'defaultBackupLocation')))
+        
 
         lbackup_lbl1 = ttk.Label(self, text='Last Backup :', font=('Helventica', 12, 'bold'))
         lbackup_lbl1.grid(row=0, column=0, padx=5, pady=5, sticky=NSEW)
@@ -65,15 +80,12 @@ class Backup_Frame(ttk.Frame):
         self.browse_btn = ttk.Button(self, text='Browse', bootstyle='secondary', command=self.browse)
         self.browse_btn.grid(row=2, column=2, padx=5, pady=5, sticky=NSEW)    
 
-        self.include_date = ttk.IntVar()
-        self.include_date.set(int(self.SM.retrieve('PB', 'includeDate')))
+        
         self.date_lbl = ttk.Label(self, text='Include Date ?', font=('Helventica', 12, 'bold'))
         self.date_lbl.grid(row=3, column=0, padx=5, pady=5, sticky=NSEW)
         self.date_btn = ttk.Checkbutton(self, bootstyle='info-round-toggle', variable=self.include_date)
         self.date_btn.grid(row=3, column=1, padx=5, pady=5, sticky=NSEW)
 
-        self.include_time = ttk.IntVar()
-        self.include_time.set(int(self.SM.retrieve('PB', 'includeTime')))
         self.time_lbl = ttk.Label(self, text='Include Time ?', font=('Helventica', 12, 'bold'))
         self.time_lbl.grid(row=4, column=0, padx=5, pady=5, sticky=NSEW)
         self.time_btn = ttk.Checkbutton(self, bootstyle='info-round-toggle', variable=self.include_time)
