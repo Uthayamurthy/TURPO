@@ -21,6 +21,7 @@ Contact Author : uthayamurthy2006@gmail.com
 
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
+from ttkbootstrap.scrolled import ScrolledFrame
 from ttkbootstrap.dialogs import dialogs
 from tkinter.filedialog import askdirectory
 from pathlib import Path
@@ -300,10 +301,10 @@ class Passwd_Tools(ttk.Frame): # Password Tools class
     def change_window(self):
         change = Passwd_Change(self, self.app, self.PATH, self.PM)
 
-class Settings(ttk.Frame):
+class Settings(ScrolledFrame):
     
     def __init__(self, main, app, PATH, pm, sm):
-        super().__init__(main)
+        super().__init__(main, autohide=True)
 
         self.app = app
         self.PATH = PATH
