@@ -23,11 +23,10 @@ import ttkbootstrap as ttk
 from PIL import Image, ImageTk
 from pathlib import Path
 from turpo import TURPO
+from snap_build import SNAP_BUILD
 from _version import __version__
 import os
 import shutil
-
-SNAP_BUILD = False # Set True for Snap build
 
 if SNAP_BUILD:
     print('Snap Build !')
