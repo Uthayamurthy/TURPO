@@ -1,10 +1,10 @@
 # Roadmap
 
+Please read https://github.com/Uthayamurthy/TURPO/discussions/2
+
 ## Upcoming
 
-- [ ] Add docs about build process (Under Progress)
-- [ ] Minor Enhancements (Under Progress)
-- [ ] Build and Release V1.0-beta2 Binaries
+- [ ] Add docs about build process
 - [ ] Improve Password Management
   - [ ] Add Show/Hide for password view and create password windows for passwords.
   - [ ] Add url option for necessary credentials
@@ -15,6 +15,8 @@
 - [ ] Build and Release V1.0-beta3 Binaries
 
 ## Completed
+- [X] ~~Build and Release V1.0-beta2 Binaries~~ (Done! - 5/03/2024)
+- [X] ~~Minor Enhancements~~ (Done! - 5/03/2024)
 - [X] ~~Add User Feedback Page~~ (Done ! - 1/01/2024)
 - [X] ~~Create Prime Key Change Tool~~ (Done! - 16/12/2023)
 - [X] ~~Create Password Restore Tool~~ (Done! - 9/12/2023)
