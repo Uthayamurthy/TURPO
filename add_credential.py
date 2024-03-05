@@ -153,15 +153,6 @@ class Add_Credential(ttk.Toplevel):
         self.PM = PM
         self.PATH = PATH
 
-        icon = Image.open(PATH / 'assets' / 'email.png')
-
-        self.images = [
-            ImageTk.PhotoImage(
-               icon,
-               name='key'
-            )
-                ]
-
         super().__init__(title='Add New Credentials')
         super().geometry('1000x750')
 

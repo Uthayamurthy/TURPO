@@ -23,9 +23,40 @@ import ttkbootstrap as ttk
 from PIL import Image, ImageTk
 from pathlib import Path
 from turpo import TURPO
+from snap_build import SNAP_BUILD
 from _version import __version__
+import os
+import shutil
+import filecmp
 
-PATH = Path(__file__).parent
+if SNAP_BUILD:
+    print('Snap Build !')
+    data_var = os.environ['SNAP_USER_DATA']
+    PATH = Path(f'{data_var}/')
+    print('PATH :', PATH)
+    snap_path = Path(os.environ['SNAP'])
+    # Copy Assets if not exists (For New Installations !)
+    if not os.path.exists(PATH / 'assets'): 
+        print('Assets does not exist ! So copying it to user data directory ...')
+        shutil.copytree(snap_path / '_internal' / 'assets', PATH / 'assets')
+        print('Done copying !')
+    if not os.path.exists(PATH / 'LICENSE.txt'):
+        print('LICENSE.txt does not exist ! So copying it to user data directory ...')
+        shutil.copy(snap_path / '_internal' / 'LICENSE.txt', PATH)
+        print('Done copying !')
+    # Update Assets for the users updating their Installation, Only if necessary ...
+    cmp = filecmp.dircmp(snap_path / '_internal' / 'assets', PATH / 'assets')
+    print('Checking whether assets needs to be updated ...')
+    if cmp.left_only or cmp.right_only:
+        print('Updating Assets ...')
+        shutil.rmtree(PATH / 'assets')
+        shutil.copytree(snap_path / '_internal' / 'assets', PATH / 'assets')
+        print('Done !')
+    else:
+        print('No need to update the assets !')
+    
+else:
+    PATH = Path(__file__).parent
 
 if __name__ == '__main__':
 

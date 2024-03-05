@@ -23,61 +23,84 @@ import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 from tkinter.filedialog import asksaveasfilename
 from pathlib import Path
-from ttkbootstrap.dialogs import dialogs
 import datetime
 
 class Backup_Frame(ttk.Frame):
-    def __init__(self, main, pm, mode):
+    def __init__(self, main, pm, sm, mode):
         
         super().__init__(main)
 
         self.PM = pm
+        self.SM = sm
         self.mode = mode
 
         self.path_var = ttk.StringVar()
         self.fname_var = ttk.StringVar()
         self.status_var = ttk.StringVar()
+        self.last_backup = ttk.StringVar()
+        self.include_date = ttk.IntVar()
+        self.include_time = ttk.IntVar()
+        
+        try:
+            self.fname_var.set(str(self.SM.retrieve('PB', 'defaultBackupFilename')))
+            self.path_var.set(str(self.SM.retrieve('PB', 'defaultBackupLocation')))
+            self.include_date.set(int(self.SM.retrieve('PB', 'includeDate')))
+            self.include_time.set(int(self.SM.retrieve('PB', 'includeTime')))
+        except:
+            self.fname_var.set('Credentials_Backup')
+            self.path_var.set('Path Not Selected !')
+            self.include_date.set(1)
+            self.include_time.set(1)
+
+        try:
+            if self.mode == 'e':
+                self.last_backup.set(str(self.SM.retrieve('PB', 'lastEncyptedBackup')))
+            if self.mode == 'u':
+                self.last_backup.set(str(self.SM.retrieve('PB', 'lastUnencyptedBackup')))
+        except:
+            self.last_backup.set('-----')
 
         self.status_var.set('Ready to Start')
-        self.fname_var.set('Credentials_Backup')
-        self.path_var.set('Path Not Selected !')
+        
+
+        lbackup_lbl1 = ttk.Label(self, text='Last Backup :', font=('Helventica', 12, 'bold'))
+        lbackup_lbl1.grid(row=0, column=0, padx=5, pady=5, sticky=NSEW)
+        lbackup_lbl2 = ttk.Label(self, textvariable=self.last_backup, font=('Helventica', 12, 'bold'))
+        lbackup_lbl2.grid(row=0, column=1, padx=5, pady=5, sticky=NSEW)
 
         fname_lbl = ttk.Label(self, text='File Name :', font=('Helventica', 12, 'bold'))
-        fname_lbl.grid(row=0, column=0, padx=5, pady=5, sticky=NSEW)
-        self.fname_txt = ttk.Entry(self, textvariable=self.fname_var, width=50)
-        self.fname_txt.grid(row=0, column=1, padx=5, pady=5, sticky=NSEW)
+        fname_lbl.grid(row=1, column=0, padx=5, pady=5, sticky=NSEW)
+        self.fname_txt = ttk.Entry(self, textvariable=self.fname_var, width=50, justify=CENTER)
+        self.fname_txt.grid(row=1, column=1, padx=5, pady=5, sticky=NSEW)
         
         file_path = ttk.Label(self, text='File Path :', font=('Helventica', 12, 'bold'))
-        file_path.grid(row=1, column=0, padx=5, pady=5, sticky=NSEW)
-        self.path_txt = ttk.Entry(self, textvariable=self.path_var, width=50)
-        self.path_txt.grid(row=1, column=1, padx=5, pady=5, sticky=NSEW)
+        file_path.grid(row=2, column=0, padx=5, pady=5, sticky=NSEW)
+        self.path_txt = ttk.Entry(self, textvariable=self.path_var, width=50, justify=CENTER)
+        self.path_txt.grid(row=2, column=1, padx=5, pady=5, sticky=NSEW)
         self.browse_btn = ttk.Button(self, text='Browse', bootstyle='secondary', command=self.browse)
-        self.browse_btn.grid(row=1, column=2, padx=5, pady=5, sticky=NSEW)    
+        self.browse_btn.grid(row=2, column=2, padx=5, pady=5, sticky=NSEW)    
 
-        self.include_date = ttk.IntVar()
+        
         self.date_lbl = ttk.Label(self, text='Include Date ?', font=('Helventica', 12, 'bold'))
-        self.date_lbl.grid(row=2, column=0, padx=5, pady=5, sticky=NSEW)
+        self.date_lbl.grid(row=3, column=0, padx=5, pady=5, sticky=NSEW)
         self.date_btn = ttk.Checkbutton(self, bootstyle='info-round-toggle', variable=self.include_date)
-        self.date_btn.grid(row=2, column=1, padx=5, pady=5, sticky=NSEW)
-        self.date_btn.invoke()
+        self.date_btn.grid(row=3, column=1, padx=5, pady=5, sticky=NSEW)
 
-        self.include_time = ttk.IntVar()
         self.time_lbl = ttk.Label(self, text='Include Time ?', font=('Helventica', 12, 'bold'))
-        self.time_lbl.grid(row=3, column=0, padx=5, pady=5, sticky=NSEW)
+        self.time_lbl.grid(row=4, column=0, padx=5, pady=5, sticky=NSEW)
         self.time_btn = ttk.Checkbutton(self, bootstyle='info-round-toggle', variable=self.include_time)
-        self.time_btn.grid(row=3, column=1, padx=5, pady=5, sticky=NSEW)
-        self.time_btn.invoke()
+        self.time_btn.grid(row=4, column=1, padx=5, pady=5, sticky=NSEW)
 
-        self.status_lbl = ttk.Label(self, text='Status', font=('Helventica', 12, 'bold'))
-        self.status_lbl.grid(row=4, column=0, padx=5, pady=5, sticky=NSEW)
+        self.status_lbl = ttk.Label(self, text='Status :', font=('Helventica', 12, 'bold'))
+        self.status_lbl.grid(row=5, column=0, padx=5, pady=5, sticky=NSEW)
         status_txt = ttk.Label(self, textvariable=self.status_var, font=('Helventica', 12, 'bold'))
-        status_txt.grid(row=4, column=1, padx=5, pady=5, sticky=NSEW)
+        status_txt.grid(row=5, column=1, padx=5, pady=5, sticky=NSEW)
 
         self.backup_btn = ttk.Button(self, text='Backup Now', bootstyle='primary', command=self.backup)
-        self.backup_btn.grid(row=5, column=2, padx=5, pady=5, sticky=NSEW)
+        self.backup_btn.grid(row=6, column=2, padx=5, pady=5, sticky=NSEW)
 
     def browse(self):
-        self.fd = asksaveasfilename(initialfile = self.fname_var.get(), defaultextension="", filetypes=[("All Files","*.*")])
+        self.fd = asksaveasfilename(initialfile = self.fname_var.get(), initialdir=self.path_var.get(), defaultextension="", filetypes=[("All Files","*.*")])
         f_name = Path(self.fd).name
         self.fname_var.set(f_name)
         f_path = Path(self.fd).parent
@@ -85,8 +108,7 @@ class Backup_Frame(ttk.Frame):
     
     def backup(self):
         self.status_var.set('Started !')
-        print(self.backup_btn['state'])
-        print(self.backup_btn['state'] == NORMAL)
+
         try:
             fname = self.fname_var.get()
             now = datetime.datetime.now()
@@ -98,12 +120,18 @@ class Backup_Frame(ttk.Frame):
             if self.include_time.get():
                 fname += time
             
+            timestamp = date[1:] + ' ' + time[1:] + ' hrs'
+
             if self.mode=='e':
                 self.PM.write(filename=fname, filepath=Path(self.path_var.get()))
+                self.SM.set('PB', 'lastEncyptedBackup', timestamp)
+                self.last_backup.set(timestamp)
                 self.status_var.set('Backup Completed Successfully !')
             elif self.mode=='u':
                 stat = self.PM.unencrypted_write(filename=fname, filepath=Path(self.path_var.get()))
                 if stat: # If status True
+                    self.SM.set('PB', 'lastUnencyptedBackup', timestamp)
+                    self.last_backup.set(timestamp)
                     self.status_var.set('Backup Completed Successfully !')
                 else:
                     self.status_var.set('Error - Prime Key Not Entered')
@@ -114,9 +142,10 @@ class Backup_Frame(ttk.Frame):
             self.status_var.set('Some Error Occurred !')
 
 class Backup(ttk.Frame):
-    def __init__(self, main, pm):
+    def __init__(self, main, pm, sm):
         super().__init__(main)
         self.PM = pm
+        self.SM = sm
 
         self.param_frame = None
 
@@ -159,7 +188,12 @@ class Backup(ttk.Frame):
         hdr = ttk.Label(self.body_frame, text='Backup Parameters', font=('Helventica', 16, 'bold'))
         hdr.grid(row=3, column=0, sticky=NSEW)
 
-        choice1.invoke()
+        default_type = self.SM.retrieve('PB', 'defaultBackupType')
+        
+        if default_type == 'Unencrypted Backup':
+            choice2.invoke()
+        else:
+            choice1.invoke()
     
     def clear_param_frame(self): # Removes all the Widgets in main
         if self.param_frame != None:
@@ -173,9 +207,9 @@ class Backup(ttk.Frame):
         self.clear_param_frame()
 
         if choice == 0:
-            self.param_frame = Backup_Frame(self.body_frame, self.PM, mode='e')
+            self.param_frame = Backup_Frame(self.body_frame, self.PM, self.SM, mode='e')
         elif choice == 1:
-            self.param_frame = Backup_Frame(self.body_frame, self.PM, mode='u')
+            self.param_frame = Backup_Frame(self.body_frame, self.PM, self.SM, mode='u')
 
                 
         self.param_frame.grid(row=4, column=0, sticky=NSEW)

@@ -21,21 +21,29 @@ Contact Author : uthayamurthy2006@gmail.com
 
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
-from ttkbootstrap.scrolled import ScrolledFrame
 from modules.passwdgen import *
 from modules.widgets import CopyField
 
 
 class RandWordPassword(ttk.Frame):
 
-    def __init__(self, main, PATH):
+    def __init__(self, main, PATH, sm):
         super().__init__(main)       
+
+        self.SM = sm
+
+        try:
+            self.num_words = ttk.IntVar(value=int(self.SM.retrieve('PG', 'wordPasswdNoWord')))
+            self.sep = ttk.StringVar(value=self.SM.retrieve('PG', 'wordPasswdSeperator'))
+            self.min_len = ttk.IntVar(value=int(self.SM.retrieve('PG', 'wordPasswdLength')))
+        except:
+            self.num_words = ttk.IntVar(value=4)
+            self.sep = ttk.StringVar(value='-')
+            self.min_len = ttk.IntVar(value=4)
 
         # Number of Words
         num_words_lbl = ttk.Label(self, text='Number Of Words : ', font=('Helventica', 12, 'bold'))
         num_words_lbl.grid(row=0, column=0, padx=5, pady=5, sticky=NSEW)
-        
-        self.num_words = ttk.IntVar(value=4)
 
         num_words_box = ttk.Spinbox(self, state="readonly", from_= 4, to=10, textvariable=self.num_words,justify=CENTER, width=8)
         num_words_box.grid(row=0, column=1, padx=5, pady=5, sticky=NSEW)
@@ -44,7 +52,6 @@ class RandWordPassword(ttk.Frame):
         sep_lbl = ttk.Label(self, text='Seperator : ', font=('Helventica', 12, 'bold'))
         sep_lbl.grid(row=1, column=0, padx=5, pady=5, sticky=NSEW)
         
-        self.sep = ttk.StringVar(value='None')
         sep_values = ['None', '-', '.', '_', ':', '!', '$']
         sep_values.reverse()
 
@@ -54,8 +61,6 @@ class RandWordPassword(ttk.Frame):
         # Min Word Length
         min_len_lbl = ttk.Label(self, text='Minimum Word Length : ', font=('Helventica', 12, 'bold'))
         min_len_lbl.grid(row=2, column=0, padx=5, pady=5, sticky=NSEW)
-        
-        self.min_len = ttk.IntVar(value=4)
 
         min_len_box = ttk.Spinbox(self, state="readonly", from_= 3, to=5, textvariable=self.min_len,justify=CENTER, width=8)
         min_len_box.grid(row=2, column=1, padx=5, pady=5, sticky=NSEW)
@@ -80,14 +85,19 @@ class RandWordPassword(ttk.Frame):
 
 class RandPassword(ttk.Frame):
 
-    def __init__(self, main, PATH):
+    def __init__(self, main, PATH, sm):
         super().__init__(main)
 
+        self.SM = sm
+        
+        try:
+            self.num_chars = ttk.IntVar(value=int(self.SM.retrieve('PG', 'randPassLength')))
+        except:
+            self.num_chars = ttk.IntVar(value=12)
+             
         # Number of Characters
         num_char_lbl = ttk.Label(self, text='Number Of Characters : ', font=('Helventica', 12, 'bold'))
         num_char_lbl.grid(row=0, column=0, padx=5, pady=5)
-        
-        self.num_chars = ttk.IntVar(value=12)
 
         num_char_box = ttk.Spinbox(self, state="readonly", from_= 10, to=25, textvariable=self.num_chars, justify=CENTER, width=8)
         num_char_box.grid(row=0, column=1, padx=5, pady=5)
@@ -116,14 +126,19 @@ class RandPassword(ttk.Frame):
 
 class RandPin(ttk.Frame):
 
-    def __init__(self, main, PATH):
+    def __init__(self, main, PATH, sm):
         super().__init__(main)
+
+        self.SM = sm
+
+        try:
+            self.num_chars = ttk.IntVar(value=int(self.SM.retrieve('PG', 'numPinLength')))
+        except:
+            self.num_chars = ttk.IntVar(value=4)
 
         # Number of Characters
         num_char_lbl = ttk.Label(self, text='Pin Length : ', font=('Helventica', 12, 'bold'))
         num_char_lbl.grid(row=0, column=0, padx=5, pady=5)
-        
-        self.num_chars = ttk.IntVar(value=4)
 
         num_char_box = ttk.Spinbox(self, state="readonly", from_= 4, to=16, textvariable=self.num_chars, justify=CENTER, width=8)
         num_char_box.grid(row=0, column=1, padx=5, pady=5)
@@ -153,8 +168,10 @@ class RandPin(ttk.Frame):
 
 class Generate(ttk.Frame):
     
-    def __init__(self, main, PATH):
+    def __init__(self, main, PATH, sm):
         super().__init__(main)
+
+        self.SM = sm
 
 
         self.PATH = PATH
@@ -204,7 +221,15 @@ class Generate(ttk.Frame):
         hdr = ttk.Label(self.body_frame, text='Password Parameters', font=('Helventica', 16, 'bold'))
         hdr.grid(row=3, column=0, sticky=NSEW)
 
-        choice1.invoke()   
+
+        default_type = self.SM.retrieve('PG', 'defaultPasswdType')
+        
+        if default_type == 'Random Character Password':
+            choice1.invoke()
+        elif default_type == 'Random Pin':
+            choice3.invoke()
+        else:
+            choice2.invoke()   
 
 
     def clear_param_frame(self): # Removes all the Widgets in main
@@ -219,11 +244,11 @@ class Generate(ttk.Frame):
         self.clear_param_frame()
 
         if choice == 0:
-            self.param_frame = RandPassword(self.body_frame, self.PATH)
+            self.param_frame = RandPassword(self.body_frame, self.PATH, self.SM)
         elif choice==1:
-            self.param_frame = RandWordPassword(self.body_frame, self.PATH)
+            self.param_frame = RandWordPassword(self.body_frame, self.PATH, self.SM)
         elif choice==2:
-            self.param_frame = RandPin(self.body_frame, self.PATH)
+            self.param_frame = RandPin(self.body_frame, self.PATH, self.SM)
                 
         self.param_frame.grid(row=4, column=0, sticky=NSEW)
 

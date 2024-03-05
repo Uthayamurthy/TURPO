@@ -58,12 +58,10 @@ python main.py
 ```
 
 ### Current Roadmap
-- [x] ~~Build and Release V1.0-beta1 Binaries~~ (Done ! Binary release - 23/10/2023, snap release - 09/11/2023)
-- [ ] Code Cleanup and Refractoring
-- [ ] Complete Settings page
-- [ ] Build and Release V1.0-beta2 Binaries
 
-Want to track the latest progress ? Check the development branch ...
+Refer to [ROADMAP.md](ROADMAP.md) for project Roadmap.
+
+Want to track the latest progress ? Check the development branch (https://github.com/Uthayamurthy/TURPO/tree/development) ...
 
 #### Always Under Progress
 - Bug Fixes

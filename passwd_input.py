@@ -46,16 +46,16 @@ class Password_Request_Window(ttk.Toplevel):
 
         self.grab_set()
         self.icon_lbl = ttk.Label(self, image='key')
-        self.icon_lbl.pack(side='top', padx=10, pady=10)
+        self.icon_lbl.grid(row=0, column=0, columnspan=2, padx=10, pady=10)
 
         self.lbl = ttk.Label(self, text='Enter the Prime Key : ', font=('Helvetica', 15, 'bold'))
-        self.lbl.pack(side='left', padx=10, pady=10)
+        self.lbl.grid(row=1, column=0, padx=10, pady=30)
         
         self.passfield = ttk.Entry(self, show='*', bootstyle='success')
-        self.passfield.pack(side='left', padx=10, pady=10)
+        self.passfield.grid(row=1, column=1, padx=10, pady=30)
         
         self.submit = ttk.Button(self, text='Ok', command=self.validate, bootstyle='success-outline')
-        self.submit.pack(side='bottom', padx=10, pady=10)
+        self.submit.grid(row=2, column=1, padx=10, pady=10)
 
         self.bind('<Return>', self.validate)
         self.protocol("WM_DELETE_WINDOW", self.passwdless_warning)

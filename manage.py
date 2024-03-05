@@ -157,12 +157,6 @@ class Manage(ttk.Frame):
 
             self.tree.bind('<<TreeviewSelect>>', self.item_selected)      
 
-        # Doesn't seem to serve any purpose -> Will be removed after testing ...
-        # if not self.PM.have_cipher() and refresh :
-        #     print('Prompt 1 - ', self.autoprompt)
-        #     prw = Password_Request_Window(self.app, self.PATH, self.PM)
-    
-
     def refresh(self):
         try:
             del self.images
@@ -184,11 +178,11 @@ class Manage(ttk.Frame):
             view_type = item['values'][2]
             if self.PM.have_cipher():
                 if view_type == 'Email':
-                    Email_View(self, self.app, self.PATH, self.PM, item['values'][1])
-                elif view_type == 'Social Media':
-                    Social_Media_View(self, self.app, self.PATH, self.PM, item['values'][1])
+                    Passwd_View('email', self, self.app, self.PATH, self.PM, item['values'][1])
+                if view_type == 'Social Media':
+                    Passwd_View('social', self, self.app, self.PATH, self.PM, item['values'][1])
                 if view_type == 'Phone Pin':
-                    Phone_Pin_View(self, self.app, self.PATH, self.PM, item['values'][1])
+                    Passwd_View('phone', self, self.app, self.PATH, self.PM, item['values'][1])
             else:
                 dialogs.Messagebox.show_error('Please Unlock before you can view any credential.')    
 
