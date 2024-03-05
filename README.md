@@ -6,12 +6,12 @@
 
 ### Features :-
 
-- **AES256 bit Encryption** on plane text file - secure and future proof (no proprietary/strange custom file type)
+- **AES256 bit Encryption** on plain text file - secure and future proof (no proprietary/strange custom file type)
 - **Completely Private and Offline** - Doesn't need Internet to work. No data is collected. Your credentials belong to you and you only !
 - **Simple** to use UI
 - For now, supports **3 types of Credentials - Email, Social Media, Phone Pin**
 - Has a **Powerful Password Generator** tool with support to 3 different types of  passwords (Random Character, Random Word and Random Number).
-- Has both **Encrypted and Unencrypted Backup** option
+- Has both **Encrypted and Unencrypted Backup** option along with **Backup Restore Tool**.
 
 ### Installation and Usage Instructions
 > For now, automatic updates are available only for the snap version.
@@ -69,7 +69,7 @@ Want to track the latest progress ? Check the development branch (https://github
 - Better Documentation
 
 ### Releases Plan
-Currently lots of features are planned and pending. They will be added and tested in subsequent beta releases. Expect a bunch of beta versions over next several weeks before the first major release.
+Currently lots of features are planned and pending. They will be added and tested in subsequent beta releases. Expect a bunch of beta versions before the first major release.
 
 ### Screenshots
 #### 1. Password Management
